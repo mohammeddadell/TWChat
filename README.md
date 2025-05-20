@@ -4,14 +4,13 @@ TWChat is a feature-rich chat application built with React Native, offering a mo
 
 ## Features
 
-- 💬 Real-time messaging
 - 🔐 Secure message storage with encryption
 - 🖼️ Image sharing capabilities
 - 📱 Cross-platform support (iOS & Android)
 - 🎨 Modern UI with Material Design
 - 🔄 Offline support with data persistence
 - 📱 Responsive and smooth animations
-- 🔍 Message search functionality
+- 🤖 Bot messaging support
 
 ## Tech Stack
 
@@ -36,7 +35,7 @@ TWChat is a feature-rich chat application built with React Native, offering a mo
 1. Clone the repository:
 
 ```bash
-git clone [your-repository-url]
+git clone https://github.com/mohammeddadell/TWChat.git
 cd TWChat
 ```
 
@@ -95,22 +94,15 @@ yarn android
 
 ```
 src/
-├── components/     # Reusable UI components
-├── screens/        # Screen components
-├── navigation/     # Navigation configuration
+├── components/    # Reusable UI components
+├── screens/       # Screen components
+├── navigation/    # Navigation configuration
 ├── store/         # Redux store setup
-├── services/      # API and business logic
-├── utils/         # Helper functions
+├── services/      # RESTful APIs
+├── theme/         # Dark/Light theming configurations
+├── constants/     # App constants
 └── types/         # TypeScript type definitions
 ```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## License
 
@@ -123,4 +115,3 @@ For support, please open an issue in the GitHub repository or contact the develo
 ## Acknowledgments
 
 - React Native community
-- All contributors who have helped shape this project
