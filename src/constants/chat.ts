@@ -10,3 +10,5 @@ export const CHAT_CONSTANTS = {
     HORIZONTAL: 16,
   },
 } as const; 
+
+export const STORAGE_KEY = 'CHAT_CONVERSATIONS';

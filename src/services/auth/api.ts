@@ -37,10 +37,4 @@ export const login = async (credentials: LoginRequest): Promise<LoginResponse> =
   });
 };
 
-export const getUsers = async (): Promise<Pick<User, 'id' | 'name'>[]> => {
-  return new Promise((resolve, _reject) => {
-    setTimeout(() => {
-      resolve([{id: '2', name: 'I am a bot'}, {id: '3', name: 'User3'}, {id: '4', name: 'User4'}]);
-    }, 1000);
-  });
-};
+
