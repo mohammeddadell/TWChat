@@ -1,0 +1,96 @@
+{
+  "conversations": [
+    {
+      "id": "1",
+      "user": {"id": "1", "name": "User1"},
+      "partner": {"id": "2", "name": "I am a bot"},
+      "type": "bot",
+      "messages": [
+        {
+          "id": "1",
+          "content": "Hey, how are you doing? I wanted to discuss the project timeline.",
+          "senderId": "1",
+          "timestamp": "10:00"
+        },
+        {
+          "id": "2",
+          "content": "are you free right now?",
+          "senderId": "2",
+          "timestamp": "10:01"
+        },
+        {
+          "id": "3",
+          "content": "sure! i'm free right now",
+          "senderId": "1",
+          "timestamp": "10:02"
+        },
+        {
+          "id": "4",
+          "content": "Hey, how are you doing? I wanted to discuss the project timeline.",
+          "senderId": "2",
+          "timestamp": "10:03"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "user": {"id": "1", "name": "User1"},
+      "partner": {"id": "3", "name": "User3"},
+      "type": "contact",
+      "messages": [
+        {
+          "id": "1",
+          "content": "The new design looks great! When can we expect the implementation?",
+          "senderId": "3",
+          "timestamp": "11:00"
+        },
+        {
+          "id": "2",
+          "content": "We should have it ready by next week.",
+          "senderId": "1",
+          "timestamp": "11:01"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "user": {"id": "1", "name": "User1"},
+      "partner": {"id": "4", "name": "User4"},
+      "type": "contact",
+      "messages": [
+        {
+          "id": "1",
+          "content": "I've completed the backend integration. Would you like to review it?",
+          "senderId": "4",
+          "timestamp": "12:00"
+        },
+        {
+          "id": "2",
+          "content": "Yes, please share the details.",
+          "senderId": "1",
+          "timestamp": "12:01"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "user": {"id": "1", "name": "User1"},
+      "partner": {"id": "5", "name": "User5"},
+      "type": "contact",
+      "messages": [
+        {
+          "id": "1",
+          "content": "Don't forget about the team meeting tomorrow at 2 PM!",
+          "senderId": "5",
+          "timestamp": "13:00"
+        },
+        {
+          "id": "2",
+          "content": "Thanks for the reminder!",
+          "senderId": "1",
+          "timestamp": "13:01"
+        }
+      ]
+    }
+  ]
+}
