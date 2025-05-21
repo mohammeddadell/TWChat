@@ -38,7 +38,6 @@ const DashboardScreen = () => {
       <ConversationsList
         conversations={allConversations}
         onChatPress={conversation => {
-          console.log('Chat pressed:', conversation);
           navigation.navigate('Chat', {conversationId: conversation.id});
         }}
       />

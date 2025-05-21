@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     left: '5%',
     right: '5%',
     width: '90%',
-    height: Platform.OS === 'ios' ? '50%' : '70%',
+    height: Platform.OS === 'ios' ? '50%' : '50%',
     borderRadius: 16,
     padding: 0,
     backgroundColor: '#fff',
