@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 import {Conversation} from '../../../types/chat';
@@ -13,16 +13,20 @@ export const ConversationsList = ({
   conversations,
   onChatPress,
 }: ConversationsListProps) => {
+  const renderItem = useCallback(
+    ({item}: {item: Conversation}) => (
+      <ConversationItem
+        key={item.id}
+        conversation={item}
+        onPress={onChatPress}
+      />
+    ),
+    [onChatPress],
+  );
   return (
     <FlashList
       data={conversations}
-      renderItem={({item}) => (
-        <ConversationItem
-          key={item.id}
-          conversation={item}
-          onPress={onChatPress}
-        />
-      )}
+      renderItem={renderItem}
       estimatedItemSize={80}
       contentContainerStyle={styles.listContainer}
     />
