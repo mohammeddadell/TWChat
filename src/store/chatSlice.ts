@@ -66,6 +66,14 @@ const chatSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
+    markConversationAsFetched: (state, action: PayloadAction<string>) => {
+      const conversation = state.conversations.find(
+        conv => conv.id === action.payload
+      );
+      if (conversation) {
+        conversation.fetched = true;
+      }
+    },
   },
   extraReducers: builder => {
     builder
@@ -123,6 +131,7 @@ export const {
   addConversation,
   clearConversation,
   setLoading,
+  markConversationAsFetched,
 } = chatSlice.actions;
 
 export default chatSlice.reducer; 

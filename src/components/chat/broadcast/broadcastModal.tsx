@@ -1,5 +1,13 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {
   Modal,
   Portal,
@@ -73,20 +81,31 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
           styles.modalContainer,
           {backgroundColor: theme.colors.surface},
         ]}>
-        <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Broadcast Message</Text>
-          <ScrollView style={styles.userList}>
-            {users.map(user => (
-              <List.Item
-                key={user.id}
-                title={user.name}
-                left={() => checkboxItem(user)}
-                onPress={() => toggleUserSelection(user.id)}
-              />
-            ))}
-          </ScrollView>
-          <BroadcastInput onSend={handleBroadcast} />
-        </View>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={{flex: 1}}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>Broadcast Message</Text>
+
+              <ScrollView
+                style={styles.userList}
+                keyboardShouldPersistTaps="handled">
+                {users.map(user => (
+                  <List.Item
+                    key={user.id}
+                    title={user.name}
+                    left={() => checkboxItem(user)}
+                    onPress={() => toggleUserSelection(user.id)}
+                  />
+                ))}
+              </ScrollView>
+
+              <BroadcastInput onSend={handleBroadcast} />
+            </View>
+          </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
       </Modal>
     </Portal>
   );
@@ -94,12 +113,12 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
 
 const styles = StyleSheet.create({
   modalContainer: {
-    alignSelf: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 16,
-    marginVertical: 32,
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? '10%' : '20%',
+    left: '5%',
+    right: '5%',
     width: '90%',
-    height: '45%',
+    height: Platform.OS === 'ios' ? '50%' : '70%',
     borderRadius: 16,
     padding: 0,
     backgroundColor: '#fff',
@@ -111,6 +130,8 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     padding: 24,
+    flex: 1,
+    justifyContent: 'space-between',
   },
   modalTitle: {
     fontSize: 20,

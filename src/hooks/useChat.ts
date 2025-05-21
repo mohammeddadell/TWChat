@@ -7,6 +7,7 @@ import {
   clearConversation,
   fetchConversations,
   fetchConversationDetails,
+  sendMessageAction,
 } from '../store/chatSlice';
 import {RootState, AppDispatch} from '../store/store';
 import {useAuth} from '../context/AuthContext';
@@ -35,6 +36,48 @@ export const useChat = () => {
     [dispatch],
   );
 
+  const handleBroadcastMessage = useCallback(
+    async (partnerUserIds: string[], content: string) => {
+      const message: ChatMessage = {
+        id: Date.now().toString(),
+        content,
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+        senderId: userID,
+      };
+
+      // Send message using Redux action
+      await dispatch(sendMessageAction({
+        conversationId: '', // Not needed for broadcast
+        message,
+        selectedUsers: partnerUserIds
+      })).unwrap();
+
+      // First add the message to local store
+      partnerUserIds.forEach(partnerId => {
+        const conversation = conversations.find(
+          conv => conv.partner.id === partnerId
+        );
+        if (conversation) {
+          dispatch(addMessage({conversationId: conversation.id, message}));
+        }
+      });
+
+      // Then fetch full conversation details for each conversation
+      for (const partnerId of partnerUserIds) {
+        const conversation = conversations.find(
+          conv => conv.partner.id === partnerId
+        );
+        if (conversation) {
+          await dispatch(fetchConversationDetails(conversation.id)).unwrap();
+        }
+      }
+    },
+    [dispatch, conversations, userID],
+  );
+
   const handleAddConversation = useCallback(
     (conversation: Conversation) => {
       dispatch(addConversation(conversation));
@@ -59,6 +102,7 @@ export const useChat = () => {
   return {
     getConversation,
     addMessage: handleAddMessage,
+    broadcastMessage: handleBroadcastMessage,
     addConversation: handleAddConversation,
     clearConversation: handleClearConversation,
     loadConversationDetails: handleLoadConversationDetails,

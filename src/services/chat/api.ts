@@ -164,7 +164,7 @@ const mockConversations: Conversation[] = [
       },
       {
         id: '10',
-        content: 'Better come at 2 PM just in case. The delay isn’t confirmed yet.',
+        content: "Better come at 2 PM just in case. The delay isn't confirmed yet.",
         senderId: '5',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       },
@@ -176,13 +176,13 @@ const mockConversations: Conversation[] = [
       },
       {
         id: '12',
-        content: 'No, it’s internal for now. We’ll schedule a separate call with them next week.',
+        content: "No, it's internal for now. We'll schedule a separate call with them next week.",
         senderId: '5',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       },
       {
         id: '13',
-        content: 'Perfect. I’ll bring my notes on the project milestones.',
+        content: "Perfect. I'll bring my notes on the project milestones.",
         senderId: '1',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       },
@@ -220,7 +220,13 @@ export const getConversation = async (conversationId: string): Promise<Conversat
 export const getMyUsers = async (): Promise<Pick<User, 'id' | 'name'>[]> => {
   return new Promise((resolve, _reject) => {
     setTimeout(() => {
-      resolve([{id: '2', name: 'I am a bot'}, {id: '3', name: 'User3'}, {id: '4', name: 'User4'}]);
+      // Get unique partners from conversations
+      const uniquePartners = Array.from(
+        new Map(
+          mockConversations.map(conv => [conv.partner.id, conv.partner])
+        ).values()
+      );
+      resolve(uniquePartners);
     }, 1000);
   });
 };
@@ -233,7 +239,7 @@ export const sendMessage = async (message: ChatMessage, selectedUsers: string[])
   selectedUsers.forEach(targetUserId => {
     // Find the conversation with this user
     const conversation = mockConversations.find(conv => 
-      conv.partner.id === targetUserId || conv.user.id === message.senderId
+      conv.partner.id === targetUserId
     );
 
     if (conversation) {

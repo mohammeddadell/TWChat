@@ -12,23 +12,17 @@ const DashboardScreen = () => {
   const navigation = useNavigation();
   const theme = useTheme();
   const insets = useSafeAreaInsets();
-  const {allConversations, loading} = useChat();
+  const {allConversations, loading, broadcastMessage} = useChat();
 
-  console.log('allConversations', allConversations);
   const handleBroadcast = useCallback(
     async (message: string, selectedUsers: string[]) => {
       try {
-        console.log(
-          'Broadcasting message:',
-          message,
-          'to users:',
-          selectedUsers,
-        );
+        broadcastMessage(selectedUsers, message);
       } catch (error) {
         console.error('Error broadcasting message:', error);
       }
     },
-    [],
+    [broadcastMessage],
   );
 
   if (loading) {
