@@ -23,12 +23,14 @@ export const ConversationsList = ({
     ),
     [onChatPress],
   );
+  const keyExtractor = useCallback((item: Conversation) => item.id, []);
   return (
     <FlashList
       data={conversations}
       renderItem={renderItem}
       estimatedItemSize={80}
       contentContainerStyle={styles.listContainer}
+      keyExtractor={keyExtractor}
     />
   );
 };

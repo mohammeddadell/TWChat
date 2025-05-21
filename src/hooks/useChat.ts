@@ -65,7 +65,7 @@ export const useChat = () => {
         }
       });
 
-      // Then fetch full conversation details for each conversation
+      // Fetch full conversation details for each conversation
       for (const partnerId of partnerUserIds) {
         const conversation = conversations.find(
           conv => conv.partner.id === partnerId

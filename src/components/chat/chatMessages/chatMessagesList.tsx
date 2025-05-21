@@ -40,7 +40,15 @@ export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({
     ),
     [userID],
   );
-
+  const handleContentSizeChange = useCallback(() => {
+    if (messages.length > 0 && flashListRef.current) {
+      flashListRef.current.scrollToItem({
+        item: messages[messages.length - 1],
+        animated: true,
+      });
+    }
+  }, [messages]);
+  const keyExtractor = useCallback((item: ChatMessage) => item.id, []);
   return (
     <View style={styles.container}>
       <FlashList
@@ -50,14 +58,8 @@ export const ChatMessagesList: React.FC<ChatMessagesListProps> = ({
         estimatedItemSize={100}
         contentContainerStyle={styles.listContent}
         inverted={false}
-        onContentSizeChange={() => {
-          if (messages.length > 0 && flashListRef.current) {
-            flashListRef.current.scrollToItem({
-              item: messages[messages.length - 1],
-              animated: true,
-            });
-          }
-        }}
+        keyExtractor={keyExtractor}
+        onContentSizeChange={handleContentSizeChange}
       />
     </View>
   );
