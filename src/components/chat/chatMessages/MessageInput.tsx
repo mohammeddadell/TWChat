@@ -10,6 +10,7 @@ import {
 import {useTheme} from '@react-navigation/native';
 import {IconButton, ProgressBar} from 'react-native-paper';
 import * as ImagePicker from 'react-native-image-picker';
+import {WINDOW} from '../../../utils/dimensions';
 
 interface MessageInputProps {
   onSend: (message: string, imageUri?: string) => Promise<void>;
@@ -153,16 +154,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   sendButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: WINDOW.BUTTON_SIZE,
+    height: WINDOW.BUTTON_SIZE,
+    borderRadius: WINDOW.BUTTON_SIZE / 2,
     justifyContent: 'center',
     alignItems: 'center',
   },
   attachButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: WINDOW.BUTTON_SIZE,
+    height: WINDOW.BUTTON_SIZE,
+    borderRadius: WINDOW.BUTTON_SIZE / 2,
     justifyContent: 'center',
     alignItems: 'center',
   },

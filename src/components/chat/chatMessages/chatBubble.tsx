@@ -4,6 +4,7 @@ import {Text, Surface} from 'react-native-paper';
 import {ChatMessage} from '../../../types/chat';
 import {useTheme} from 'react-native-paper';
 import {CHAT_CONSTANTS} from '../../../constants/chat';
+import {WINDOW} from '../../../utils/dimensions';
 
 interface ChatBubbleProps {
   message: ChatMessage;
@@ -69,8 +70,8 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   messageImage: {
-    width: 200,
-    height: 200,
+    width: WINDOW.WIDTH * WINDOW.MESSAGE_IMAGE_RATIO,
+    height: WINDOW.WIDTH * WINDOW.MESSAGE_IMAGE_RATIO,
     borderRadius: 8,
     marginBottom: 8,
   },

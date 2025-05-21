@@ -19,6 +19,7 @@ import {
 import {BroadcastInput} from './BroadcastInput';
 import {getMyUsers} from '../../../services/chat/api';
 import {User} from '../../../types/auth';
+import {WINDOW} from '../../../utils/dimensions';
 
 interface BroadcastModalProps {
   visible: boolean;
@@ -114,11 +115,11 @@ export const BroadcastModal: React.FC<BroadcastModalProps> = ({
 const styles = StyleSheet.create({
   modalContainer: {
     position: 'absolute',
-    top: Platform.OS === 'ios' ? '10%' : '20%',
-    left: '5%',
-    right: '5%',
-    width: '90%',
-    height: Platform.OS === 'ios' ? '50%' : '50%',
+    top: Platform.OS === 'ios' ? WINDOW.HEIGHT * 0.1 : WINDOW.HEIGHT * 0.2,
+    left: WINDOW.WIDTH * 0.05,
+    right: WINDOW.WIDTH * 0.05,
+    width: WINDOW.WIDTH * WINDOW.MODAL_WIDTH_RATIO,
+    height: WINDOW.HEIGHT * WINDOW.MODAL_HEIGHT_RATIO,
     borderRadius: 16,
     padding: 0,
     backgroundColor: '#fff',
