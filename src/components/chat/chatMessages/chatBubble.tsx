@@ -11,46 +11,43 @@ interface ChatBubbleProps {
   style?: object;
 }
 
-const ChatBubble: React.FC<ChatBubbleProps> = ({
-  message,
-  isCurrentUser,
-  style,
-}) => {
-  const theme = useTheme();
-  console.log(message);
-  const bubbleStyle: ViewStyle = {
-    backgroundColor: isCurrentUser
-      ? theme.colors.primary
-      : theme.colors.surfaceVariant,
-    alignSelf: isCurrentUser ? 'flex-end' : 'flex-start',
-  };
+const ChatBubble: React.FC<ChatBubbleProps> = React.memo(
+  ({message, isCurrentUser, style}) => {
+    const theme = useTheme();
+    const bubbleStyle: ViewStyle = {
+      backgroundColor: isCurrentUser
+        ? theme.colors.primary
+        : theme.colors.surfaceVariant,
+      alignSelf: isCurrentUser ? 'flex-end' : 'flex-start',
+    };
 
-  const textColor = isCurrentUser
-    ? theme.colors.onPrimary
-    : theme.colors.onSurfaceVariant;
+    const textColor = isCurrentUser
+      ? theme.colors.onPrimary
+      : theme.colors.onSurfaceVariant;
 
-  return (
-    <View style={[styles.container, style]}>
-      <Surface style={[styles.bubble, bubbleStyle]} elevation={1}>
-        {message.imageUri && (
-          <Image
-            source={{uri: message.imageUri}}
-            style={styles.messageImage}
-            resizeMode="cover"
-          />
-        )}
-        {message.content && (
-          <Text style={[styles.messageText, {color: textColor}]}>
-            {message.content}
+    return (
+      <View style={[styles.container, style]}>
+        <Surface style={[styles.bubble, bubbleStyle]} elevation={1}>
+          {message.imageUri && (
+            <Image
+              source={{uri: message.imageUri}}
+              style={styles.messageImage}
+              resizeMode="cover"
+            />
+          )}
+          {message.content && (
+            <Text style={[styles.messageText, {color: textColor}]}>
+              {message.content}
+            </Text>
+          )}
+          <Text style={[styles.timestamp, {color: textColor}]}>
+            {message.timestamp}
           </Text>
-        )}
-        <Text style={[styles.timestamp, {color: textColor}]}>
-          {message.timestamp}
-        </Text>
-      </Surface>
-    </View>
-  );
-};
+        </Surface>
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {

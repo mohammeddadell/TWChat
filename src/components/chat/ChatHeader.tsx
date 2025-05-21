@@ -8,20 +8,22 @@ interface ChatHeaderProps {
   partnerId: string;
 }
 
-export const ChatHeader: React.FC<ChatHeaderProps> = ({partnerName}) => {
-  const {colors} = useTheme();
+export const ChatHeader: React.FC<ChatHeaderProps> = React.memo(
+  ({partnerName}) => {
+    const {colors} = useTheme();
 
-  return (
-    <View style={styles.container}>
-      <Avatar.Text
-        size={32}
-        label={partnerName.substring(0, 2).toUpperCase()}
-        style={styles.avatar}
-      />
-      <Text style={[styles.name, {color: colors.text}]}>{partnerName}</Text>
-    </View>
-  );
-};
+    return (
+      <View style={styles.container}>
+        <Avatar.Text
+          size={32}
+          label={partnerName.substring(0, 2).toUpperCase()}
+          style={styles.avatar}
+        />
+        <Text style={[styles.name, {color: colors.text}]}>{partnerName}</Text>
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {

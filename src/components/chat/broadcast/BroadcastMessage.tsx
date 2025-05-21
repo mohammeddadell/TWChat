@@ -7,27 +7,27 @@ interface BroadcastMessageProps {
   message: ChatMessage;
 }
 
-export const BroadcastMessage: React.FC<BroadcastMessageProps> = ({
-  message,
-}) => {
-  const theme = useTheme();
+export const BroadcastMessage: React.FC<BroadcastMessageProps> = React.memo(
+  ({message}) => {
+    const theme = useTheme();
 
-  return (
-    <View style={styles.container}>
-      <Surface
-        style={[
-          styles.broadcastContainer,
-          {backgroundColor: theme.colors.primaryContainer},
-        ]}>
-        <Text style={[styles.broadcastLabel, {color: theme.colors.primary}]}>
-          Broadcast
-        </Text>
-        <Text style={styles.messageText}>{message.content}</Text>
-        <Text style={styles.timestamp}>{message.timestamp}</Text>
-      </Surface>
-    </View>
-  );
-};
+    return (
+      <View style={styles.container}>
+        <Surface
+          style={[
+            styles.broadcastContainer,
+            {backgroundColor: theme.colors.primaryContainer},
+          ]}>
+          <Text style={[styles.broadcastLabel, {color: theme.colors.primary}]}>
+            Broadcast
+          </Text>
+          <Text style={styles.messageText}>{message.content}</Text>
+          <Text style={styles.timestamp}>{message.timestamp}</Text>
+        </Surface>
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {
