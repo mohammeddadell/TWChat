@@ -202,7 +202,7 @@ export const getConversations = async (_currentUserID: string): Promise<Conversa
   // Simulate network delay
   await delay(1500);
   
-  // Return conversations with only the last message
+  // Return conversations with only the last message for performance (should be handled by backend)
   return mockConversations.map(conversation => ({
     ...conversation,
     messages: conversation.messages.length > 0 

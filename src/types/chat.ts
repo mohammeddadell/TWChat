@@ -5,7 +5,7 @@ export interface ChatMessage {
     content: string;
     senderId: string;
     timestamp: string;
-    imageUri?: string; // Optional image URI for attached images
+    imageUri?: string;
   }
 
   export interface Conversation {
