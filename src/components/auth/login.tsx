@@ -1,5 +1,5 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {View, StyleSheet, Animated} from 'react-native';
+import React, {useState, useCallback} from 'react';
+import {View, StyleSheet} from 'react-native';
 import {TextInput, Button, Text} from 'react-native-paper';
 import {useForm, Controller} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -12,8 +12,6 @@ interface LoginProps {
 
 export const Login = ({onSubmit}: LoginProps) => {
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const fadeAnim = useState(new Animated.Value(0))[0];
 
   const {
     control,
@@ -26,29 +24,6 @@ export const Login = ({onSubmit}: LoginProps) => {
       password: 'password123',
     },
   });
-
-  useEffect(() => {
-    if (errorMessage) {
-      // Fade in
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-
-      const timer = setTimeout(() => {
-        Animated.timing(fadeAnim, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: true,
-        }).start(() => {
-          setErrorMessage(null);
-        });
-      }, 5000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [errorMessage, fadeAnim]);
 
   const handleFormSubmit = useCallback(
     async (data: LoginFormData) => {
@@ -63,13 +38,23 @@ export const Login = ({onSubmit}: LoginProps) => {
             visibilityTime: 3000,
           });
         } else {
-          setErrorMessage('Invalid credentials');
+          Toast.show({
+            text1: 'Error',
+            text2: 'Something went wrong',
+            type: 'error',
+            position: 'bottom',
+            visibilityTime: 3000,
+          });
         }
       } catch (err) {
         console.error('Login error login component:', err);
-        setErrorMessage(
-          err instanceof Error ? err.message : 'An unexpected error occurred',
-        );
+        Toast.show({
+          text1: 'Login error',
+          text2: 'Invalid credentials',
+          type: 'error',
+          position: 'bottom',
+          visibilityTime: 3000,
+        });
       } finally {
         setLoading(false);
       }
@@ -127,13 +112,6 @@ export const Login = ({onSubmit}: LoginProps) => {
           Login
         </Button>
       </View>
-      <View>
-        {errorMessage && (
-          <Animated.View style={[styles.errorContainer, {opacity: fadeAnim}]}>
-            <Text style={styles.errorMessage}>{errorMessage}</Text>
-          </Animated.View>
-        )}
-      </View>
     </View>
   );
 };
@@ -153,21 +131,5 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 16,
-  },
-  errorContainer: {
-    position: 'absolute',
-    top: 28,
-    left: 16,
-    right: 16,
-    backgroundColor: '#ffebee',
-    padding: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#ffcdd2',
-    zIndex: 1,
-  },
-  errorMessage: {
-    color: '#c62828',
-    fontSize: 14,
   },
 });

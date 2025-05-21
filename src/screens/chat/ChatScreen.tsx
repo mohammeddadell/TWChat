@@ -16,6 +16,7 @@ import ChatMessagesList from '../../components/chat/chatMessages/chatMessagesLis
 import {ChatHeader} from '../../components/chat/ChatHeader';
 import {User} from '../../types/auth';
 import {useChat} from '../../hooks/useChat';
+import Toast from 'react-native-toast-message';
 
 type ChatScreenRouteProp = RouteProp<
   {
@@ -43,6 +44,8 @@ export const ChatScreen: React.FC = () => {
   });
   const [waitingForBotResponse, setWaitingForBotResponse] = useState(false);
   const conversationId = route.params?.conversationId;
+
+  const [errorBeforeCount, setErrorBeforeCount] = useState(3);
 
   useEffect(() => {
     const localConversation = getConversation(conversationId);
@@ -75,39 +78,48 @@ export const ChatScreen: React.FC = () => {
   }, [conversation, navigation, userID, partner]);
 
   const handleSendMessage = async (text: string, imageUri?: string) => {
-    const newMessage: ChatMessage = {
-      id: Date.now().toString(),
-      senderId: userID,
-      content: text,
-      imageUri: imageUri,
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-    };
-    addMessage(conversationId, newMessage);
-    setMessages(prevMessages => [...prevMessages, newMessage]);
+    if (errorBeforeCount === 0) {
+      Toast.show({
+        text1: 'Error sending message',
+        text2: 'You have reached the maximum number of messages',
+        type: 'error',
+      });
+      setErrorBeforeCount(3);
+    } else {
+      const newMessage: ChatMessage = {
+        id: Date.now().toString(),
+        senderId: userID,
+        content: text,
+        imageUri: imageUri,
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+      };
+      addMessage(conversationId, newMessage);
+      setMessages(prevMessages => [...prevMessages, newMessage]);
 
-    //mock waiting for bot response on a websocket
-    if (conversation?.type === 'bot') {
-      setWaitingForBotResponse(true);
-      setTimeout(async () => {
-        const newBotMessage: ChatMessage = {
-          id: Date.now().toString(),
-          senderId: partner.id,
-          content: `${newMessage.content} is a good idea. what else do you think?`,
-          timestamp: new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-          }),
-        };
-        setMessages(prevMessages => [...prevMessages, newBotMessage]);
-        addMessage(conversationId, newBotMessage);
-        setWaitingForBotResponse(false);
-      }, 2000);
+      //mock waiting for bot response on a websocket
+      if (conversation?.type === 'bot') {
+        setWaitingForBotResponse(true);
+        setTimeout(async () => {
+          const newBotMessage: ChatMessage = {
+            id: Date.now().toString(),
+            senderId: partner.id,
+            content: `${newMessage.content} is a good idea. what else do you think?`,
+            timestamp: new Date().toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit',
+            }),
+          };
+          setMessages(prevMessages => [...prevMessages, newBotMessage]);
+          addMessage(conversationId, newBotMessage);
+          setWaitingForBotResponse(false);
+        }, 2000);
+      }
+      setErrorBeforeCount(errorBeforeCount - 1);
     }
   };
-
   return (
     <KeyboardAvoidingView
       style={[

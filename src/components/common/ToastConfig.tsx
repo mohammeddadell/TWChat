@@ -1,9 +1,7 @@
 import React from 'react';
-import {useTheme} from 'react-native-paper';
 import {BaseToast} from 'react-native-toast-message';
 
 const SuccessToast = (props: any) => {
-  //const theme = useTheme();
   return (
     <BaseToast
       {...props}
@@ -23,40 +21,42 @@ const SuccessToast = (props: any) => {
 };
 
 const ErrorToast = (props: any) => {
-  const theme = useTheme();
   return (
-    <ErrorToast
+    <BaseToast
       {...props}
       style={{
-        borderLeftColor: theme.colors.error,
-        backgroundColor: theme.colors.error,
+        borderLeftColor: 'red',
+        backgroundColor: 'white',
       }}
       contentContainerStyle={{
         paddingHorizontal: 15,
       }}
       text1Style={{
         fontSize: 16,
-        color: theme.colors.onError,
+        color: 'black',
+      }}
+      text2Style={{
+        fontSize: 12,
+        color: 'black',
       }}
     />
   );
 };
 
 const InfoToast = (props: any) => {
-  const theme = useTheme();
   return (
     <BaseToast
       {...props}
       style={{
-        borderLeftColor: theme.colors.primary,
-        backgroundColor: theme.colors.primary,
+        borderLeftColor: 'blue',
+        backgroundColor: 'white',
       }}
       contentContainerStyle={{
         paddingHorizontal: 15,
       }}
       text1Style={{
         fontSize: 16,
-        color: theme.colors.onPrimary,
+        color: 'black',
       }}
     />
   );
